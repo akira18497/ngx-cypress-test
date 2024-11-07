@@ -11,16 +11,20 @@ describe('dropdown list', () => {
 
         //2
         cy.get('nav nb-select').then( dropDown => {
-            const object = cy.wrap(dropDown)
-            object.click()
 
-            cy.get('.options-list nb-option').each(listItem => {
+            cy.wrap(dropDown).click()
+
+            cy.get('.options-list nb-option').each((listItem, index) => {
 
                 const itemTest = listItem.text().trim()
 
                 cy.wrap(listItem).click()
-                object.should('contain', itemTest)
-                object.click()
+                cy.wrap(dropDown).should('contain', itemTest)
+
+                if(index < 3){
+                    cy.wrap(dropDown).click()
+                }
+                
             })
 
         })
